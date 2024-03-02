@@ -57,3 +57,10 @@ export function fetchAllCategories() {
         resolve(response);
     })
 }
+
+export function fetchProductById(id: string){
+    return new Promise (async (resolve)=>{
+        const response = await axios.get(SERVER_URL+'products?id='+id);
+        resolve(response);
+    })
+}

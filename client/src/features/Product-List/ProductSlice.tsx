@@ -4,7 +4,8 @@ import {
     fetchAllProducts,
     fetchProductsByFilter,
     fetchAllbrands,
-    fetchAllCategories
+    fetchAllCategories,
+    fetchProductById
 } from "./ProductApi"
 import {
     Product,
@@ -19,6 +20,7 @@ interface ProductState {
     brand: BrandsList[],
     category: CategoriesList[],
     totalItems: number,
+    selectedProductById: Product[],
     status: string,
 }
 
@@ -27,6 +29,7 @@ const initialState: ProductState = {
     brand: [],
     category: [],
     totalItems: 0,
+    selectedProductById: [],
     status: "",
 }
 
@@ -53,19 +56,25 @@ export const fetchProductsByFilterAsync = createAsyncThunk('product/fetchProduct
 export const fetchAllBrandsAsync = createAsyncThunk('brand/fetchAllbrands',
     async () => {
         const responce: any = await fetchAllbrands();
-        console.log(responce.data)
+        // console.log(responce.data)
         return responce.data;
     }
 )
 export const fetchAllCategoriesAsync = createAsyncThunk('category/fetchAllCategories',
     async () => {
         const responce: any = await fetchAllCategories();
-        console.log(responce.data)
+        // console.log(responce.data)
         return responce.data;
     }
 )
 
-
+export const fetchProductByIdAsync = createAsyncThunk('products/fetchProductById',
+    async (id: string) => {
+        const responce: any = await fetchProductById(id);
+        console.log(responce.data)
+        return responce.data;
+    }
+)
 
 export const productSlice = createSlice({
     name: "product",
@@ -106,6 +115,13 @@ export const productSlice = createSlice({
                 state.status = "idle",
                 state.category = action.payload;
             })
+            .addCase(fetchProductByIdAsync.pending, (state) => {
+                state.status = "loading"
+            })
+            .addCase(fetchProductByIdAsync.fulfilled, (state, action) => {
+                state.status = "idle",
+                state.selectedProductById = action.payload;
+            })
     }
 })
 
@@ -120,6 +136,7 @@ export const selectAllProducts = (state: RootState) => state.product.products as
 export const selectTotalItems = (state: RootState) => state.product.totalItems as number;
 export const selectAllCategories = (state: RootState) => state.product.category as CategoriesList[];
 export const selectAllBrands = (state: RootState) => state.product.brand as BrandsList[];
+export const selectProductById = (state: RootState) => state.product.selectedProductById as Product[];
 
 export default productSlice.reducer;
 
