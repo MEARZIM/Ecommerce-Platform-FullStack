@@ -13,7 +13,17 @@ export interface Product {
     images: string[];
   }
 
-export interface ProductList {
-  product: Product[],
-  totalitems: number
+
+export interface BrandsList {
+  value: string;
+  label: string;
+  checked: boolean;
+  id: string;
+}
+
+export interface CategoriesList {
+  value: string;
+  label: string;
+  checked: boolean;
+  id: string;
 }

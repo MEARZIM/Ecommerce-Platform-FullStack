@@ -43,3 +43,17 @@ export function fetchProductsByFilter(filter: any, sort: any, pagination: any)  
         resolve(response);
     })
 }
+
+export function fetchAllbrands() {
+    return new Promise (async (resolve)=>{
+        const response = await axios.get(SERVER_URL+'brand');
+        resolve(response);
+    })
+}
+
+export function fetchAllCategories() {
+    return new Promise (async (resolve)=>{
+        const response = await axios.get(SERVER_URL+'category');
+        resolve(response);
+    })
+}
