@@ -71,7 +71,7 @@ export const fetchAllCategoriesAsync = createAsyncThunk('category/fetchAllCatego
 export const fetchProductByIdAsync = createAsyncThunk('products/fetchProductById',
     async (id: string) => {
         const responce: any = await fetchProductById(id);
-        console.log(responce.data)
+        // console.log(responce.data)
         return responce.data;
     }
 )
